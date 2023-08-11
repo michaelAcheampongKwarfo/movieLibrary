@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:movie_library/widgets/app_colors.dart';
 
-class TrendingSlider extends StatelessWidget {
-  const TrendingSlider({
+class TvShowsSlider extends StatelessWidget {
+  const TvShowsSlider({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.25,
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.4,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: 10,

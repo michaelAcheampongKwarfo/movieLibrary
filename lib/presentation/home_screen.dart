@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movie_library/services/api_service.dart';
 import 'package:movie_library/widgets/app_colors.dart';
 import 'package:movie_library/widgets/app_text.dart';
 import 'package:movie_library/widgets/top_rated_slider.dart';
 import 'package:movie_library/widgets/trending_slider.dart';
+import 'package:movie_library/widgets/tv_shows_slider.dart';
 import 'package:movie_library/widgets/up_comming_slider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,6 +15,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    ApiServices().loadMovies();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +52,12 @@ class _HomeScreenState extends State<HomeScreen> {
               data: 'UpComming Movies',
               fontsize: 20.0,
             ),
-            UpCommingSlider()
+            UpCommingSlider(),
+            AppText(
+              data: 'TV Shows',
+              fontsize: 20.0,
+            ),
+            TvShowsSlider(),
           ],
         ),
       ),
