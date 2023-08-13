@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_library/services/api_service.dart';
+import 'package:movie_library/services/api_services.dart';
 import 'package:movie_library/widgets/app_colors.dart';
 import 'package:movie_library/widgets/app_text.dart';
 import 'package:movie_library/widgets/top_rated_slider.dart';
@@ -15,9 +15,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ApiServices _apiServices = ApiServices();
   @override
   void initState() {
-    ApiServices().loadMovies();
+    _apiServices.fetchTrendingMovies();
+    _apiServices.fetchTopRatedMovies();
+    _apiServices.fetchUpcommingMovies();
+    _apiServices.fetchTvShows();
     super.initState();
   }
 
@@ -32,32 +36,84 @@ class _HomeScreenState extends State<HomeScreen> {
           color: amberColor,
         ),
       ),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.all(10.0),
-        physics: BouncingScrollPhysics(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(10.0),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText(
+            const AppText(
               data: 'Trending Movies',
               fontsize: 20.0,
             ),
-            TrendingSlider(),
-            AppText(
+            SizedBox(
+              child: FutureBuilder(
+                  future: _apiServices.fetchTrendingMovies(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: AppText(
+                            data: snapshot.error.toString(), fontsize: 15.0),
+                      );
+                    } else {
+                      return const TrendingSlider();
+                    }
+                  }),
+            ),
+            const AppText(
               data: 'Top Rated Movies',
               fontsize: 20.0,
             ),
-            TopRatedSlider(),
-            AppText(
+            SizedBox(
+              child: FutureBuilder(
+                  future: _apiServices.fetchTopRatedMovies(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: AppText(
+                            data: snapshot.error.toString(), fontsize: 15.0),
+                      );
+                    } else {
+                      return const TopRatedSlider();
+                    }
+                  }),
+            ),
+            const AppText(
               data: 'UpComming Movies',
               fontsize: 20.0,
             ),
-            UpCommingSlider(),
-            AppText(
+            SizedBox(
+              child: FutureBuilder(
+                  future: _apiServices.fetchUpcommingMovies(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: AppText(
+                            data: snapshot.error.toString(), fontsize: 15.0),
+                      );
+                    } else {
+                      return const UpCommingSlider();
+                    }
+                  }),
+            ),
+            const AppText(
               data: 'TV Shows',
               fontsize: 20.0,
             ),
-            TvShowsSlider(),
+            SizedBox(
+              child: FutureBuilder(
+                  future: _apiServices.fetchTvShows(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: AppText(
+                            data: snapshot.error.toString(), fontsize: 15.0),
+                      );
+                    } else {
+                      return const TvShowsSlider();
+                    }
+                  }),
+            ),
           ],
         ),
       ),
