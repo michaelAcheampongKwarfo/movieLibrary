@@ -3,6 +3,8 @@ import 'package:movie_library/services/api_services.dart';
 import 'package:movie_library/services/constants.dart';
 import 'package:movie_library/widgets/app_colors.dart';
 
+import '../presentation/details_screen.dart';
+
 class TopRatedSlider extends StatefulWidget {
   const TopRatedSlider({
     super.key,
@@ -41,11 +43,34 @@ class _TopRatedSliderState extends State<TopRatedSlider> {
                 borderRadius: BorderRadius.circular(12.0),
                 color: amberColor,
               ),
-              child: Image.network(
-                Constants.imagePath +
-                    _apiServices.topRatedMovies[index]['poster_path'],
-                filterQuality: FilterQuality.high,
-                fit: BoxFit.fill,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DetailScreen(
+                          title: _apiServices.topRatedMovies[index]['title'],
+                          backDropPath: Constants.imagePath +
+                              _apiServices.topRatedMovies[index]
+                              ['backdrop_path'],
+                          originalTitle: _apiServices.topRatedMovies[index]
+                          ['original_title'],
+                          overview: _apiServices.topRatedMovies[index]
+                          ['overview'],
+                          posterPath: _apiServices.topRatedMovies[index]
+                          ['poster_path'],
+                          releaseDate: _apiServices.topRatedMovies[index]
+                          ['release_date'],
+                          voteAverage: _apiServices.topRatedMovies[index]
+                          ['vote_average']),
+                    ),
+                  );
+                },
+                child: Image.network(
+                  Constants.imagePath +
+                      _apiServices.topRatedMovies[index]['poster_path'],
+                  filterQuality: FilterQuality.high,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           );

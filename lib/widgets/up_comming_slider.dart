@@ -3,6 +3,8 @@ import 'package:movie_library/services/api_services.dart';
 import 'package:movie_library/services/constants.dart';
 import 'package:movie_library/widgets/app_colors.dart';
 
+import '../presentation/details_screen.dart';
+
 class UpCommingSlider extends StatefulWidget {
   const UpCommingSlider({
     super.key,
@@ -41,11 +43,34 @@ class _UpCommingSliderState extends State<UpCommingSlider> {
                 borderRadius: BorderRadius.circular(12.0),
                 color: amberColor,
               ),
-              child: Image.network(
-                Constants.imagePath +
-                    _apiServices.upcommingMovies[index]['poster_path'],
-                filterQuality: FilterQuality.high,
-                fit: BoxFit.fill,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DetailScreen(
+                          title: _apiServices.upcommingMovies[index]['title'],
+                          backDropPath: Constants.imagePath +
+                              _apiServices.upcommingMovies[index]
+                              ['backdrop_path'],
+                          originalTitle: _apiServices.upcommingMovies[index]
+                          ['original_title'],
+                          overview: _apiServices.upcommingMovies[index]
+                          ['overview'],
+                          posterPath: _apiServices.upcommingMovies[index]
+                          ['poster_path'],
+                          releaseDate: _apiServices.upcommingMovies[index]
+                          ['release_date'],
+                          voteAverage: _apiServices.upcommingMovies[index]
+                          ['vote_average']),
+                    ),
+                  );
+                },
+                child: Image.network(
+                  Constants.imagePath +
+                      _apiServices.upcommingMovies[index]['poster_path'],
+                  filterQuality: FilterQuality.high,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           );

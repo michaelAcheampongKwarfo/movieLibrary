@@ -14,9 +14,7 @@ class ApiServices {
     if (response.statusCode == 200) {
       Map trendingResult = json.decode(response.body);
       trendingMovies = trendingResult['results'];
-    } else {
-      print('Failed to load trending movies');
-    }
+    } else {}
   }
 
   fetchTopRatedMovies() async {
@@ -24,9 +22,7 @@ class ApiServices {
     if (response.statusCode == 200) {
       Map topRatedResult = json.decode(response.body);
       topRatedMovies = topRatedResult['results'];
-    } else {
-      print('Failed to load trending movies');
-    }
+    } else {}
   }
 
   fetchUpcommingMovies() async {
@@ -34,9 +30,7 @@ class ApiServices {
     if (response.statusCode == 200) {
       Map upCommingResult = json.decode(response.body);
       upcommingMovies = upCommingResult['results'];
-    } else {
-      print('Failed to load trending movies');
-    }
+    } else {}
   }
 
   fetchTvShows() async {
@@ -44,8 +38,6 @@ class ApiServices {
     if (response.statusCode == 200) {
       Map tvShowsResult = json.decode(response.body);
       tvShows = tvShowsResult['results'];
-    } else {
-      print('Failed to load trending movies');
-    }
+    } else {}
   }
 }

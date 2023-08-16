@@ -3,6 +3,8 @@ import 'package:movie_library/services/api_services.dart';
 import 'package:movie_library/services/constants.dart';
 import 'package:movie_library/widgets/app_colors.dart';
 
+import '../presentation/details_screen.dart';
+
 class TvShowsSlider extends StatefulWidget {
   const TvShowsSlider({
     super.key,
@@ -41,11 +43,34 @@ class _TvShowsSliderState extends State<TvShowsSlider> {
                 borderRadius: BorderRadius.circular(12.0),
                 color: amberColor,
               ),
-              child: Image.network(
-                Constants.imagePath +
-                    _apiServices.tvShows[index]['poster_path'],
-                filterQuality: FilterQuality.high,
-                fit: BoxFit.fill,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DetailScreen(
+                          title: _apiServices.tvShows[index]['title'],
+                          backDropPath: Constants.imagePath +
+                              _apiServices.tvShows[index]
+                              ['backdrop_path'],
+                          originalTitle: _apiServices.tvShows[index]
+                          ['original_title'],
+                          overview: _apiServices.tvShows[index]
+                          ['overview'],
+                          posterPath: _apiServices.tvShows[index]
+                          ['poster_path'],
+                          releaseDate: _apiServices.tvShows[index]
+                          ['release_date'],
+                          voteAverage: _apiServices.tvShows[index]
+                          ['vote_average']),
+                    ),
+                  );
+                },
+                child: Image.network(
+                  Constants.imagePath +
+                      _apiServices.tvShows[index]['poster_path'],
+                  filterQuality: FilterQuality.high,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           );
